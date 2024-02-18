@@ -1,0 +1,31 @@
+services: 
+
+  api-app:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    image: api-app:latest
+    container_name: api-app
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    networks:
+      - api-network
+
+  api-caller:
+    image: data_dao_de_task:latest
+    init: true
+    command: http://host.docker.internal:8000/
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    depends_on:
+      - api-app
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge
