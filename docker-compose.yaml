@@ -6,6 +6,12 @@ services:
       dockerfile: ./Dockerfile
     image: api-app:latest
     container_name: api-app
+    env_file:
+      - .env
+    environment:
+      MOTHERDUCK_PATH: ${MOTHERDUCK_PATH}
+      DUCKDB_PATH: ${DUCKDB_PATH}
+      ENVIRONMENT: ${ENVIRONMENT}
     expose:
       - "8000"
     ports:
